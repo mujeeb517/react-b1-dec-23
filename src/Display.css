@@ -1,0 +1,10 @@
+ /* selectors */
+ .img {
+     border: 1px solid red;
+     border-radius: 100px;
+ }
+
+ .heading {
+     font-weight: lighter;
+     color: red;
+ }
