@@ -1,18 +1,17 @@
+import ProductItem from "./ProductItem";
+
+// container component
 function ProductList() {
+    // api 
+    // fetch
     const products = [
-        { id: 1, brand: 'Apple', model: 'Iphone 13', price: 800, img: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQAwgMBIgACEQEDEQH/xAAcAAEAAQUBAQAAAAAAAAAAAAAABQECAwQHCAb/xABHEAACAQICBAgJCAcJAAAAAAAAAQIDBAURBhIhMSI2QVFhcXTRCBMUFjJSkZSxB0JVgZOhssFDRVRzkrPhIzM0RFNjZIKE/8QAGgEBAAMBAQEAAAAAAAAAAAAAAAIDBAEFBv/EACMRAQACAgICAQUBAAAAAAAAAAABAgMRBCESMUETIjJRYSP/2gAMAwEAAhEDEQA/AO4gAAAAABjuK0LehUrVNkKcHOT6Es2BSrXpUYOpWqRpwSzcptJIj3pJgUW08aw5Nb07qGz7zzrplpPeaS3tW8v601aa7VvaqXAjFbtm5vp358x87RuKEp6rhkuhs7pzb1X5zYD9NYd71DvK+c2A/TWHe9Q7zzbhmC18WuFb2FGVWrqueSluXO39Zq31hWw+4qW9zTcKlOWrOMltizuoNvTb0nwBb8bw33uHeU86NH/pzDfe4d55atLSeJ3U6ak6VGklryjvbfIjflgGHL9DKXTKbJ1xTb004uNky18oel1pPgD3Y3hr/wDVDvHnNgH03h3vUO88sYrgtCFtr2lF66lm0m3sIKVtWUnq0KmXTA5fHak6lDLhvjnVoexPObAPpvDfeod4858A+m8N96h3njh0K/8Aoz/g/oZbW1nUrKNSnJR5c1kQiJlVPUbl7C85sA+m8O96h3m7aYhZ3sNezuqNxH1qVRSX3HkKnhtvL9G/azctI3uC1ViGCXVa1uKXC4EtksuR8/LvJzjtramM9JnT1zmVPnNAdI1pVotZ4q4qFWacK0VuU47Hl0H0ZWuAAAAAAAAAAAAAAidK9mjeKNb/ACWp8CWInSzi1inZanwA8r4hRnOyt5wWajFZpdbNPWlc1KWpQ8Xq7G9XLMm7dqVpR6IL7myj1VCU6aWeWe4nEot/A8ZusAulcWVWnCq6bhJTWalFtPL2pew18Yva+I1Lm9uqinWq8KUkQEm60pylVUHF5ZP6zPZ1pVLGq5v5uzp2jXbu01otBSpX+z/MNZkpUpmnodTcqGIPmumTFWl0E8d9dPoeJX/GqKnAwVE8yQqwNWpE11u0TENSSNeslJZSNySyNWqize2HNji24WUYpvJGzGHAknuyew0o1HSmpcnKSUNWVPWjuaIXrp8zzME4ckTHqXVPB8beg01zXU/yOnnMPB84jT7VP8jp55rYAAAAAAAAAAAAABE6WcWsU7LU+BLETpY8tGcUb2LyWp8APLNpdOjCMJZyhls50bPltHljP2EZB8FdRcmWILq9G2qzc0qm3et2ZdwVBU4R1YfeyxMpN5xa5w6+w0Ep69tib/5bJyvRIT5O7i318Ss3UirjymU403vkug+qr0tjzKItqX1HBiLceukBXpmhWiTN1TIy4jkaaSuvVG1EalU2672mhWlvNeNjyQ1qrN3C62vTqUXvis4/WR1WW0WNV07uHNLOL+sst+Ly+bijJimHcPB84jS7VM6ecw8HxrzHms1sup5nTzymMAAAAAAAAAAAAAD5z5ReI2O7/wDB1Nq6j6M+c+UXiLjvYqnwA8t57RmUzBYguzDezaWh7Vk9wka0qtWhilevbVJU6sK8nGcXk082dS0W0jpY5R8TcatO/hHOUNymuWUe45fUjneXX76XxZlo1J21SNenN06lJqUZp5NM5OOLQ0cbm342Tr18w61d0ck9hB3sMmzNozpLSx+3dCtq0r6nHOUOSoudfmiuJQyz35kaTqdS+orkpmxxer566lk2Rdee03r+eTIerU2s9HF1DDntpbORj19WUZLemmWymWx4coxW+UkiVpefktuJd08HPboxiXReL+XE60ck8HPZoxiXTeL+XE62eZLAAA4AAAAAAAAAAAERpYk9GcVz2ryWpsfUyXInSzizinZan4WB5Lh6EeoqW0/Qj1FxYgruJawwC7vrR3MJU6cNurr55yyIjrPt8BuoVMFpKLWdODpyXKmhI+IjDWubvn8dP4s1L2rnPxa3LebmtqTv581eWXtZGyTbee0srH2oRG7Tst69a2r069CbhVg84yjyM6HhGPU8dsnCrqwvqceHFbpr1l+aOcuLMlvOtRrRq0ZuFSLzUlvRC1e9t3G5V8FuvU+30WL1lGq45rYyGnVTe8yYnK5rrytpasstfVXosjVNl85fGNSszcr6ltw2nM2MMi6t9T9WOc39X9SM13z7CdwKlq0Klw/ncFdSIxfyljy5dVdz8HxLzHm8t91M6ecw8HziNLtUzp5lAAAAAAAAAAAAAAInSzizinZan4WSxE6WcWcU7LU/CwPJUPQj1FSkPQj1FSxBUy0bu4tYVPJ6soa64WXKYS2p/dy6hIsrvhXMee4kYMjJWed1cLk8dL4lEiys9Iz1KxQNijRza2CETaoxyCO2/h8Y5OE0pRkspJ7miMx3BpWWVxbpu2k/4HzEnbvJonLScKsHTqxUoNZSjLc0aq4oy08flbj1PTn1nbyua0acV1vmR9LlCjRVOmsoxWSRsXOEQwxSqWybo1Jb+WPR1EdXqbGUfSnHuJZs25vr4dv8HziPLtUzp5zDwfOI0u1TOnmRrAAAAAAAAAAAAAAidLOLOKdlqfhZLETpZxZxTstT8LA8k0/Qj1FxbD0I9RcWIBSfoS6ipbN8CXUBjqRzubh/70viIozOObu2t6ry+JakTj0qme5XQRs0zDEzQOuNqk8iStamWWRF02blGW414LalKs6fQUZxqQcJrWjLY0+U+Zx/C52OtXo5ytXy8sOh9BMW1XLLab+tGpRnCaUoyi1JNZpo2ZMcZKf1fMRb2++8HziNLtUzpxzDwfOI8+1TOnngAAAAAAAAAAAAAAETpZxZxTstT8LJYiNLOLGK9lqfBgeSqfoR6kVLafoR6kXFiAUn6EuoqUn6L6gNi2SlK8T5a0kY9VxbT5DNZbZXf75irtbbLoj7GW06ySxxRlgWJF8SKxmgzZpSNWBnpsuxzp1IUZ7jep1OA10Mi6ctptQnwX1HoUt0trLqXg+cR59qmdPOYeD3xHn2qZ088FMAAAAAAAAAAAAACK0pjKejeKRgs5O1qZL/AKslSypCNWEqc45xkspJ7mmB41pvOnF9CLj7fTn5O8Y0fxO4qWdnVu8KnJzo1qMdZwi/mzS2prn3PZ1L4/yO7/ZLj7GXcWIMBSSbTSNjyO7/AGS4+xl3B2d3y2lzl+5l3AVspZyuVz1WxVe8xq2vqU9eFrX1muFF0pLW+vLeVnC9n+r7zPopS7iyuSIjSi+K023BTqxb1Zb+c2EiPla3z/V139jLuM1vHEaeUZ4fdyhyf2Ms19w86p+Et1LIywNdTuuXDb37F9xcqtyv1Ze/Yssi9P2542/TegzPGWrCUnuSbI6NzcLfhl99iySwzAtI9Jp+SYRg9enCbyqXFxFwhBcubf5ZsvjkUrX2nFZdY8H2Mo6DOT3Sup5HTiF0SwChozo/aYTbPXjQhwqjWWvJ+lL6yaPMWgAAAAAAAAAAAAAAALWU1Yy2uK9gAFfFw9WPsHi4erH2AAPFw9SPsKeLh6kfYABXxcPUj7B4uHqx9gADxcPVj7B4uHqx9gADUgvmx9gXKUAFy3IqAAAAAAAAAB//2Q==' },
+        { id: 1, brand: 'Apple', model: 'Iphone 13', price: 800, img: 'https://images.pexels.com/photos/16247538/pexels-photo-16247538/free-photo-of-a-cell-phone-sitting-on-a-table-next-to-a-plant.jpeg?auto=compress&cs=tinysrgb&w=800' },
         { id: 2, brand: 'Apple', model: 'Iphone 14', price: 1000, img: 'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRU5KYtYVRMplF9xFxqF9tubJdBCmnDGciC50DC7DM1pDHhppNhWZQwdgZra0vUYICdgzXVEX0_PWpqzYtRJfJ-tJCiP4m5gyUsR8z9OV1m41r8zA-4diJVzf8' }
     ];
 
     return <div>
-        <h1>Products</h1>
-        {products.map(function (product) {
-            return <div>
-                <h1>{product.brand} {product.model}</h1>
-                <img alt="product" width="200" height="200" src={product.img} />
-                <h1>${product.price}</h1>
-            </div>
-        })}
+        <h1 className="text-2xl font-light">Products</h1>
+        {products.map(item => <ProductItem product={item} />)}
     </div>
 }
 
