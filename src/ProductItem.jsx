@@ -1,9 +1,7 @@
 // presentation component
 function ProductItem({ product }) {
-    return <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <a href="#">
-            <img className="rounded-t-lg h-45 w-full" src={product.img} alt="" />
-        </a>
+    return <div className="max-w-sm m-2 bg-white rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <img className="rounded-t-lg w-full" src={product.img} alt="" />
         <div className="p-5">
             <a href="#">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{product.brand} {product.model}</h5>
