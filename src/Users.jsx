@@ -13,32 +13,41 @@ import React from "react";
 import axios from 'axios';
 import UserItem from "./UserItem";
 import Error from "./util/Error";
+import Loader from "./util/Loader";
 
 class Users extends React.Component {
-
     state = {
         users: [],
-        hasError: true
+        hasError: false,
+        loading: true
     }
 
     constructor() {
         super();
+
+        // this.setState({ loading: true });
         // GET, PUT, POST, DELETE
-        // axios.get('https://api.github.com/users1')
-        //     .then((res) => {
-        //         this.setState({ users: res.data });
-        //     })
-        //     .catch(err => {
-        //         this.setState({ hasError: true });
-        //     })
+        setTimeout(() => {
+            axios.get('https://api.github.com/users')
+                .then((res) => {
+                    this.setState({ users: res.data });
+                })
+                .catch(err => {
+                    this.setState({ hasError: true });
+                })
+                .finally(() => {
+                    this.setState({ loading: false });
+                });
+        }, 2000);
     }
 
     render() {
-        const { users, hasError } = this.state;
+        const { users, hasError, loading } = this.state;
 
         return <div>
-            <h1 className="text-xl font-semibold">Users</h1>
+            {loading ? <Loader /> : null}
             {hasError ? <Error /> : null}
+            <h1 className="text-xl font-semibold">Users</h1>
             <div>
                 {users.map(item => <UserItem key={item.id} user={item} />)}
             </div>
