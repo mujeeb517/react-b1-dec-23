@@ -29,7 +29,7 @@ class Users extends React.Component {
         // this.setState({ loading: true });
         // GET, PUT, POST, DELETE
         setTimeout(() => {
-            axios.get('https://api.github.com/users1')
+            axios.get('https://api.github.com/users')
                 .then((res) => {
                     this.setState({ users: res.data });
                 })

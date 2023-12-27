@@ -1,12 +1,11 @@
-import Counter from "./Counter";
 import Header from "./Header";
-import ProductList from "./ProductList";
-import Users from "./Users";
+import ProductList from "./products/ProductList";
 
 function App() {
     return <div>
         <Header />
-        <Users />
+        <ProductList />
+        {/* <Users /> */}
         {/* <Counter />
         <Counter value={100} />
         <Counter value={5} /> */}
