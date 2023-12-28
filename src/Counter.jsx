@@ -13,9 +13,24 @@ import React from 'react';
 // state
 class Counter extends React.Component {
 
-    state = {
-        count: this.props.value || 0
-    };
+    constructor(props) {
+        super();
+        this.state = {
+            count: props.value || 0
+        };
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('should update', nextProps, nextState);
+        return nextState.count <= 10;
+    }
+
+    // search textbox
+    // where 
+    componentDidUpdate() {
+        console.log('updated');
+    }
+
 
     inc = () => {
         // this.state.count = this.state.count + 1;

@@ -1,9 +1,11 @@
 import Header from "./Header";
 import ProductList from "./products/ProductList";
+import Counter from './Counter';
 
 function App() {
     return <div>
         <Header />
+        <Counter />
         <ProductList />
         {/* <Users /> */}
         {/* <Counter />
