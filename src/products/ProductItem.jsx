@@ -25,8 +25,6 @@ function Actions() {
     </div>
 }
 
-
-
 // mobile-first
 // desktop
 // responsive
