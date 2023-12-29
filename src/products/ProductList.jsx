@@ -53,9 +53,11 @@ class ProductList extends React.Component {
             <ShouldRender cond={this.state.hasError}>
                 <Error />
             </ShouldRender>
+            {/* xs, sm, md, lg, xl */}
             <h1 className="text-lg font-bold">Products</h1>
-
-            {this.state.products.map(item => <ProductItem key={item._id} item={item} />)}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 sm:grid-cols-1">
+                {this.state.products.map(item => <ProductItem key={item._id} item={item} />)}
+            </div>
         </div>
     }
 }
