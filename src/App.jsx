@@ -5,6 +5,8 @@ import ProductList from "./products/ProductList";
 import Counter from './Counter';
 import AutoCounter from "./AutoCounter";
 import ShouldRender from "./util/ShouldRender";
+import CounterFunc from "./CounterFunc";
+import AutoCounterFunc from "./AutoCounterFunc";
 
 // class App extends React.Component {
 
@@ -30,8 +32,9 @@ import ShouldRender from "./util/ShouldRender";
 function App() {
     return <div>
         <Header />
+        <AutoCounterFunc />
         {/* <Counter /> */}
-        <ProductList />
+        {/* <ProductList /> */}
         {/* <Users /> */}
         {/* <Counter />
         <Counter value={100} />

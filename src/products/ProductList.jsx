@@ -12,6 +12,7 @@ import ProductItem from './ProductItem';
 // shouldComponentUpdate: xN
 // componentDidUpdate: xN
 // componentWillUnmount: x1
+// React 16, state
 
 class ProductList extends React.Component {
 
