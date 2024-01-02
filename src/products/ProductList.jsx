@@ -47,12 +47,16 @@ function ProductList() {
     const [hasError, setError] = useState(false);
     const [loading, setLoading] = useState(true);
     const [columns, setColumns] = useState(true);
+    const [page, setPage] = useState(1);
+    const [size, setSize] = useState(10);
 
     useEffect(() => {
+        setLoading(true);
         // IIFE
         (async function () {
             try {
-                const res = await axios.get('https://products-api-0pc7.onrender.com/api/products');
+                const url = `https://products-api-0pc7.onrender.com/api/products/page/${page}/size/${size}`
+                const res = await axios.get(url);
                 setProducts(res.data.data);
             } catch (err) {
                 setError(true);
@@ -60,7 +64,15 @@ function ProductList() {
                 setLoading(false);
             }
         }());
-    }, []);
+    }, [page]);
+
+    const next = () => {
+        setPage(page + 1);
+    };
+
+    const prev = () => {
+        setPage(page - 1);
+    };
 
     return <div className="m-2">
         <ShouldRender cond={loading}>
@@ -84,7 +96,20 @@ function ProductList() {
                     </svg>
                 </button>
             </div>
+            <div className="flex">
+                <button onClick={prev} className="rounded p-1 hover:bg-orange-500 hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                    </svg>
+                </button>
+                <button onClick={next} className="rounded p-1 hover:bg-orange-500 hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
+            </div>
         </div>
+
 
         <ShouldRender cond={columns}>
             <ColumnView products={products} />
