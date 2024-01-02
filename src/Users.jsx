@@ -15,49 +15,42 @@ import UserItem from "./UserItem";
 import Error from "./util/Error";
 import Loader from "./util/Loader";
 import ShouldRender from "./util/ShouldRender";
+import { useState } from "react";
+import { useEffect } from "react";
 
-class Users extends React.Component {
-    state = {
-        users: [],
-        hasError: false,
-        loading: true
-    }
+function Users() {
 
-    constructor() {
-        super();
+    const [users, setUsers] = useState([]);
+    const [hasError, setError] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-        // this.setState({ loading: true });
-        // GET, PUT, POST, DELETE
+    useEffect(() => {
         setTimeout(() => {
             axios.get('https://api.github.com/users')
                 .then((res) => {
-                    this.setState({ users: res.data });
+                    setUsers(res.data);
                 })
                 .catch(err => {
-                    this.setState({ hasError: true });
+                    setError(true);
                 })
                 .finally(() => {
-                    this.setState({ loading: false });
+                    setLoading(false);
                 });
         }, 2000);
-    }
+    }, []);
 
-    render() {
-        const { users, hasError, loading } = this.state;
-
-        return <div>
-            <ShouldRender cond={loading}>
-                <Loader />
-            </ShouldRender>
-            <ShouldRender cond={hasError}>
-                <Error />
-            </ShouldRender>
-            <h1 className="text-xl font-semibold">Users</h1>
-            <div>
-                {users.map(item => <UserItem key={item.id} user={item} />)}
-            </div>
+    return <div>
+        <ShouldRender cond={loading}>
+            <Loader />
+        </ShouldRender>
+        <ShouldRender cond={hasError}>
+            <Error />
+        </ShouldRender>
+        <h1 className="text-xl font-semibold">Users</h1>
+        <div>
+            {users.map(item => <UserItem key={item.id} user={item} />)}
         </div>
-    }
+    </div>
 }
 
 export default Users;
