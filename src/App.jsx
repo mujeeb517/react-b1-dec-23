@@ -33,9 +33,9 @@ import Users from "./Users";
 function App() {
     return <div>
         <Header />
-        <Users />
+        {/* <Users /> */}
         {/* <Counter /> */}
-        {/* <ProductList /> */}
+        <ProductList />
         {/* <Users /> */}
         {/* <Counter />
         <Counter value={100} />
