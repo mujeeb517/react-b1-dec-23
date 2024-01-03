@@ -52,13 +52,15 @@ function ProductList() {
     const [columns, setColumns] = useState(true);
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(10);
+    const [search, setSearch] = useState('');
+    const [searchText, setSearchText] = useState('');
 
     useEffect(() => {
         setLoading(true);
         // IIFE
         (async function () {
             try {
-                const url = `https://products-api-0pc7.onrender.com/api/products/page/${page}/size/${size}`
+                const url = `https://products-api-0pc7.onrender.com/api/products/page/${page}/size/${size}?search=${search}`
                 const res = await axios.get(url);
                 setProductRes(res.data);
             } catch (err) {
@@ -67,7 +69,7 @@ function ProductList() {
                 setLoading(false);
             }
         }());
-    }, [page]);
+    }, [page, searchText]);
 
     const next = () => {
         if (page < productsRes.metadata.pages) {
@@ -78,6 +80,17 @@ function ProductList() {
     const prev = () => {
         if (page > 1)
             setPage(page - 1);
+    };
+
+    const onSearchChange = (e) => {
+        setSearch(e.target.value);
+    };
+
+    const onEnter = (e) => {
+        if (e.key === 'Enter') {
+            setPage(1);
+            setSearchText(search);
+        }
     };
 
     return <div className="m-2">
@@ -114,6 +127,9 @@ function ProductList() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                     </svg>
                 </button>
+            </div>
+            <div>
+                <input onKeyDown={onEnter} onChange={onSearchChange} className="p-1 border rounded" type="text" placeholder="Search product or model" />
             </div>
         </div>
 
