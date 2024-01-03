@@ -54,13 +54,15 @@ function ProductList() {
     const [size, setSize] = useState(10);
     const [search, setSearch] = useState('');
     const [searchText, setSearchText] = useState('');
+    const [sort, setSort] = useState('');
+    const [dir, setDir] = useState('');
 
     useEffect(() => {
         setLoading(true);
         // IIFE
         (async function () {
             try {
-                const url = `https://products-api-0pc7.onrender.com/api/products/page/${page}/size/${size}?search=${search}`
+                const url = `https://products-api-0pc7.onrender.com/api/products/page/${page}/size/${size}?search=${search}&sort=${sort}&direction=${dir}`;
                 const res = await axios.get(url);
                 setProductRes(res.data);
             } catch (err) {
@@ -69,7 +71,7 @@ function ProductList() {
                 setLoading(false);
             }
         }());
-    }, [page, searchText]);
+    }, [page, searchText, sort, dir]);
 
     const next = () => {
         if (page < productsRes.metadata.pages) {
@@ -91,6 +93,13 @@ function ProductList() {
             setPage(1);
             setSearchText(search);
         }
+    };
+
+    const onSortChange = (e) => {
+        const value = e.target.value;
+        const tokens = value.split(':'); // price:asc
+        setSort(tokens[0]);
+        setDir(tokens[1]);
     };
 
     return <div className="m-2">
@@ -130,6 +139,15 @@ function ProductList() {
             </div>
             <div>
                 <input onKeyDown={onEnter} onChange={onSearchChange} className="p-1 border rounded" type="text" placeholder="Search product or model" />
+            </div>
+            <div>
+                <select onChange={onSortChange} className="ml-2 h-8 border rounded" >
+                    <option value="">Sort By</option>
+                    <option value="price:asc">Price Low to High</option>
+                    <option value="price:desc">Price High to Low</option>
+                    <option value="discount:asc">Discount Low to High</option>
+                    <option value="discount:desc">Discount High to Low</option>
+                </select>
             </div>
         </div>
 
