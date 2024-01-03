@@ -151,7 +151,6 @@ function ProductList() {
             </div>
         </div>
 
-
         <ShouldRender cond={columns}>
             <ColumnView products={productsRes.data} />
         </ShouldRender>
@@ -162,3 +161,8 @@ function ProductList() {
 }
 
 export default ProductList;
+
+
+// Routing
+// SPA: Single page application
+// 

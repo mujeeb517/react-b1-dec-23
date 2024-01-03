@@ -11,10 +11,13 @@ function Header() {
                 <h1 className="text-3xl ml-1 font-light text-white">Products</h1>
             </div>
             <ul className="flex text-white mt-2 mr-4">
-                <li className="ml-2 hover:text-orange-800">Home</li>
-                <li className="ml-2 hover:text-orange-800">About</li>
-                <li className="ml-2 hover:text-orange-800">Products</li>
-                <li className="ml-2 hover:text-orange-800">Contact</li>
+                <li className="ml-2 hover:text-orange-800">
+                    <a href="/">Home</a>
+                </li>
+                <li className="ml-2 hover:text-orange-800"> <a href="/about"> About</a></li>
+                <li className="ml-2 hover:text-orange-800"> <a href="/products"> Products</a></li>
+                <li className="ml-2 hover:text-orange-800"> <a href="/users"> Users</a></li>
+                <li className="ml-2 hover:text-orange-800"> <a href="/contact"> Contact</a></li>
             </ul>
         </header>);
 }

@@ -2,50 +2,28 @@ import React from "react";
 
 import Header from "./Header";
 import ProductList from "./products/ProductList";
-import Counter from './Counter';
-import AutoCounter from "./AutoCounter";
-import ShouldRender from "./util/ShouldRender";
-import CounterFunc from "./CounterFunc";
-import AutoCounterFunc from "./AutoCounterFunc";
 import Users from "./Users";
-
-// class App extends React.Component {
-
-//     state = { show: true }
-
-//     onHide = () => {
-//         this.setState({ show: !this.state.show });
-//     }
-
-//     render() {
-//         return <div>
-//             <Header />
-//             <ShouldRender cond={this.state.show}>
-//                 <AutoCounter />
-//             </ShouldRender>
-//             <button onClick={this.onHide} className="m-2 bg-orange-500 p-2 rounded">Hide</button>
-//         </div >;
-//     }
-// }
-
-
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from "./Home";
+import About from "./About";
+import Contact from "./Contact";
+import Footer from "./Footer";
+import NotFound from "./NotFound";
 
 function App() {
-    return <div>
+    return <BrowserRouter>
         <Header />
-        {/* <Users /> */}
-        {/* <Counter /> */}
-        <ProductList />
-        {/* <Users /> */}
-        {/* <Counter />
-        <Counter value={100} />
-        <Counter value={5} /> */}
-        {/* <ProductList /> */}
-    </div>;
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/products" element={<ProductList />} />
+            {/* <Route path="*" element={<Home />} /> */}
+            <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Footer />
+    </BrowserRouter>;
 }
 
 export default App;
-
-
-// function
-// null or UI
