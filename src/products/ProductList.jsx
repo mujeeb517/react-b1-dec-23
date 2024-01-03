@@ -43,7 +43,10 @@ function ColumnView({ products }) {
 
 function ProductList() {
 
-    const [products, setProducts] = useState([]);
+    const [productsRes, setProductRes] = useState({
+        data: [],
+        metadata: {}
+    });
     const [hasError, setError] = useState(false);
     const [loading, setLoading] = useState(true);
     const [columns, setColumns] = useState(true);
@@ -57,7 +60,7 @@ function ProductList() {
             try {
                 const url = `https://products-api-0pc7.onrender.com/api/products/page/${page}/size/${size}`
                 const res = await axios.get(url);
-                setProducts(res.data.data);
+                setProductRes(res.data);
             } catch (err) {
                 setError(true);
             } finally {
@@ -67,11 +70,14 @@ function ProductList() {
     }, [page]);
 
     const next = () => {
-        setPage(page + 1);
+        if (page < productsRes.metadata.pages) {
+            setPage(page + 1);
+        }
     };
 
     const prev = () => {
-        setPage(page - 1);
+        if (page > 1)
+            setPage(page - 1);
     };
 
     return <div className="m-2">
@@ -102,6 +108,7 @@ function ProductList() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                     </svg>
                 </button>
+                <h1 className="m-1 font-semibold">Page {page} of {productsRes.metadata.pages} ({productsRes.metadata.rows} records)</h1>
                 <button onClick={next} className="rounded p-1 hover:bg-orange-500 hover:text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
@@ -112,10 +119,10 @@ function ProductList() {
 
 
         <ShouldRender cond={columns}>
-            <ColumnView products={products} />
+            <ColumnView products={productsRes.data} />
         </ShouldRender>
         <ShouldRender cond={!columns}>
-            <TableView products={products} />
+            <TableView products={productsRes.data} />
         </ShouldRender>
     </div>
 }
