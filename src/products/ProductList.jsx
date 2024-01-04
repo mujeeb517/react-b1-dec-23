@@ -6,6 +6,7 @@ import Error from '../util/Error';
 import ProductItem from './ProductItem';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 // life cycle
 // constructor: x1
@@ -112,6 +113,9 @@ function ProductList() {
         {/* xs, sm, md, lg, xl */}
         <div className="flex">
             <h1 className="text-lg font-bold">Products</h1>
+            <div className="m-1">
+                <Link to="/products/new" className="bg-orange-500 p-2 text-white">Add New</Link>
+            </div>
             <div>
                 <button className="m-1" onClick={() => setColumns(false)}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={!columns ? 'h-6 w-6 text-orange-500' : 'h-6 w-6'}>
