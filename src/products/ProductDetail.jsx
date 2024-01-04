@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../util/axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -9,11 +9,11 @@ function ProductDetail() {
 
     const params = useParams();
 
-    const id = params.id;   
+    const id = params.id;
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
-        axios.get(`https://products-api-0pc7.onrender.com/api/products/${id}`)
+        axios.get(`/api/products/${id}`)
             .then(res => setProduct(res.data))
             .catch(err => console.log(err));
     }, []);

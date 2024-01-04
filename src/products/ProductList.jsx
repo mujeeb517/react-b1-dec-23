@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axios from '../util/axios';
 import ShouldRender from '../util/ShouldRender';
 import Loader from '../util/Loader';
 import Error from '../util/Error';
@@ -62,7 +62,7 @@ function ProductList() {
         // IIFE
         (async function () {
             try {
-                const url = `https://products-api-0pc7.onrender.com/api/products/page/${page}/size/${size}?search=${search}&sort=${sort}&direction=${dir}`;
+                const url = `/api/products/page/${page}/size/${size}?search=${search}&sort=${sort}&direction=${dir}`;
                 const res = await axios.get(url);
                 setProductRes(res.data);
             } catch (err) {
