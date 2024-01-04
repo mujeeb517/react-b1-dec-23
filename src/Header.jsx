@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 function Header() {
     // <h1>Header</h1>
@@ -14,10 +15,10 @@ function Header() {
                 <li className="ml-2 hover:text-orange-800">
                     <a href="/">Home</a>
                 </li>
-                <li className="ml-2 hover:text-orange-800"> <a href="/about"> About</a></li>
-                <li className="ml-2 hover:text-orange-800"> <a href="/products"> Products</a></li>
-                <li className="ml-2 hover:text-orange-800"> <a href="/users"> Users</a></li>
-                <li className="ml-2 hover:text-orange-800"> <a href="/contact"> Contact</a></li>
+                <li className="ml-2 hover:text-orange-800"> <Link to="/about"> About</Link></li>
+                <li className="ml-2 hover:text-orange-800"> <Link to="/products"> Products</Link></li>
+                <li className="ml-2 hover:text-orange-800"> <Link to="/users"> Users</Link></li>
+                <li className="ml-2 hover:text-orange-800"> <Link to="/contact"> Contact</Link></li>
             </ul>
         </header>);
 }
