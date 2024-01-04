@@ -1,6 +1,7 @@
 import ShouldRender from "../util/ShouldRender";
 import moment from 'moment';
 import NoImg from '../assets/img/no-img.png';
+import { Link } from "react-router-dom";
 
 function Price({ item }) {
     function getPrice() {
@@ -39,7 +40,9 @@ function ProductItem({ item }) {
     return (<div className="m-4 bg-gray-100 flex flex-col items-center justify-between rounded shadow">
         <img onError={onImgError} src={item.image} width={200} height={200} />
         <div>
-            <h1 className="font-bold">{item.brand} {item.model}</h1>
+            <Link to={'/products/' + item._id}>
+                <h1 className="font-bold text-blue-300">{item.brand} {item.model}</h1>
+            </Link>
             <Price item={item} />
             <h1>{moment(item.updatedDate).fromNow()}</h1>
             <ShouldRender cond={item.inStock}>
