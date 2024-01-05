@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { isValidElement, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import ShouldRender from '../util/ShouldRender';
@@ -22,13 +22,21 @@ function NewProduct() {
     const [success, setSuccess] = useState(false);
 
     const onInputChange = (e) => {
+        console.log(e.target.value);
         setProduct({
             ...product,
             [e.target.name]: e.target.value
         });
     };
 
+    const isValid = () => {
+        return product.brand
+            && product.model
+            && product.price;
+    };
+
     const onSave = async () => {
+        if (!isValid()) return;
         try {
             const payload = { ...product, inStock: product.inStock === 'on' };
             await axios.post('/api/products', payload);
@@ -54,21 +62,30 @@ function NewProduct() {
         <div className="mt-4 flex flex-col">
             <label>Brand</label>
             <select value={product.brand} onChange={onInputChange} name="brand" className="border p-2 rounded">
-                <option>--select--</option>
+                <option value="">--select--</option>
                 <option value="Apple">Apple</option>
                 <option value="Samsung">Samsung</option>
                 <option value="Google">Google</option>
                 <option value="Xiomi">Xiomi</option>
                 <option value="Vivo">Vivo</option>
             </select>
+            <ShouldRender cond={!product.brand}>
+                <span className="m-1 text-sm text-red-500">Required</span>
+            </ShouldRender>
         </div>
         <div className="mt-4 flex flex-col">
             <label>Model</label>
-            <input value={product.model} onChange={onInputChange} name="model" className="border p-2 rounded" type="text" placeholder="Model" />
+            <input value={product.model} onChange={onInputChange} name="model" className={product.model ? "border border-green-500 p-2 rounded" : "border border-red-400 p-2 rounded"} type="text" placeholder="Model" />
+            <ShouldRender cond={!product.model}>
+                <span className="m-1 text-sm text-red-500">Required</span>
+            </ShouldRender>
         </div>
         <div className="mt-4 flex flex-col">
             <label>Price</label>
             <input value={product.price} onChange={onInputChange} name="price" className="border p-2 rounded" type="text" placeholder="Price" />
+            <ShouldRender cond={!product.price}>
+                <span className="m-1 text-sm text-red-500">Required</span>
+            </ShouldRender>
         </div>
         <div className="mt-4 flex flex-col">
             <label>Discount</label>
