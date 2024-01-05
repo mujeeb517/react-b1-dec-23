@@ -1,6 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import ShouldRender from '../util/ShouldRender';
+import Error from '../util/Error';
+
+import axios from '../util/axios';
 
 function NewProduct() {
+
+    const navigate = useNavigate();
 
     const [product, setProduct] = useState({
         brand: '',
@@ -10,6 +18,9 @@ function NewProduct() {
         discount: ''
     });
 
+    const [hasError, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
+
     const onInputChange = (e) => {
         setProduct({
             ...product,
@@ -17,15 +28,32 @@ function NewProduct() {
         });
     };
 
-    const onSave = () => {
-        console.log(product);
+    const onSave = async () => {
+        try {
+            const payload = { ...product, inStock: product.inStock === 'on' };
+            await axios.post('/api/products', payload);
+            setSuccess(true);
+            setProduct({ brand: '', model: '', price: '', discount: '', inStock: false });
+            // redirect
+            // navigate('/products');
+        } catch (err) {
+            setError(true);
+        }
     };
 
     return (<div className="m-4 bg-gray-100 p-4 shadow w-1/2">
+        <ShouldRender cond={success}>
+            <div className="p-3 bg-green-500 rounded text-white">
+                Successfully product added!
+            </div>
+        </ShouldRender>
+        <ShouldRender cond={hasError}>
+            <Error />
+        </ShouldRender>
         <h1 className="text-lg">Add New Product</h1>
         <div className="mt-4 flex flex-col">
             <label>Brand</label>
-            <select onChange={onInputChange} name="brand" className="border p-2 rounded">
+            <select value={product.brand} onChange={onInputChange} name="brand" className="border p-2 rounded">
                 <option>--select--</option>
                 <option value="Apple">Apple</option>
                 <option value="Samsung">Samsung</option>
@@ -36,19 +64,19 @@ function NewProduct() {
         </div>
         <div className="mt-4 flex flex-col">
             <label>Model</label>
-            <input onChange={onInputChange} name="model" className="border p-2 rounded" type="text" placeholder="Model" />
+            <input value={product.model} onChange={onInputChange} name="model" className="border p-2 rounded" type="text" placeholder="Model" />
         </div>
         <div className="mt-4 flex flex-col">
             <label>Price</label>
-            <input onChange={onInputChange} name="price" className="border p-2 rounded" type="text" placeholder="Price" />
+            <input value={product.price} onChange={onInputChange} name="price" className="border p-2 rounded" type="text" placeholder="Price" />
         </div>
         <div className="mt-4 flex flex-col">
             <label>Discount</label>
-            <input onChange={onInputChange} name="discount" className="border p-2 rounded" type="text" placeholder="Discount" />
+            <input value={product.discount} onChange={onInputChange} name="discount" className="border p-2 rounded" type="text" placeholder="Discount" />
         </div>
         <div className="mt-4">
             <label>In Stock?</label>
-            <input onChange={onInputChange} name="inStock" className="ml-1 border p-2 rounded" type="checkbox" />
+            <input checked={product.inStock} onChange={onInputChange} name="inStock" className="ml-1 border p-2 rounded" type="checkbox" />
         </div>
         <div className="mt-2">
             <button onClick={onSave} className="bg-orange-500 p-2 text-white rounded">Save</button>
