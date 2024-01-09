@@ -15,14 +15,14 @@ function NewProduct() {
         model: '',
         price: '',
         inStock: false,
-        discount: ''
+        discount: '',
+        image: null
     });
 
     const [hasError, setError] = useState(false);
     const [success, setSuccess] = useState(false);
 
     const onInputChange = (e) => {
-        console.log(e.target.value);
         setProduct({
             ...product,
             [e.target.name]: e.target.value
@@ -39,14 +39,26 @@ function NewProduct() {
         if (!isValid()) return;
         try {
             const payload = { ...product, inStock: product.inStock === 'on' };
-            await axios().post('/api/products', payload);
+
+            const fd = new FormData();
+
+            for (let key in payload) {
+                fd.append(key, payload[key]);
+            }
+
+            await axios().post('/api/products', fd);
             setSuccess(true);
-            setProduct({ brand: '', model: '', price: '', discount: '', inStock: false });
+            setProduct({ brand: '', model: '', price: '', discount: '', inStock: false, image: null });
             // redirect
             // navigate('/products');
         } catch (err) {
             setError(true);
         }
+    };
+
+    const onFileChange = (e) => {
+        const image = e.target.files[0];
+        setProduct({ ...product, image });
     };
 
     return (<div className="m-4 bg-gray-100 p-4 shadow w-1/2">
@@ -90,6 +102,10 @@ function NewProduct() {
         <div className="mt-4 flex flex-col">
             <label>Discount</label>
             <input value={product.discount} onChange={onInputChange} name="discount" className="border p-2 rounded" type="text" placeholder="Discount" />
+        </div>
+        <div className="mt-4 flex flex-col">
+            <label>Image</label>
+            <input onChange={onFileChange} name="image" className="ml-1 border p-2 rounded" type="file" />
         </div>
         <div className="mt-4">
             <label>In Stock?</label>
