@@ -8,6 +8,7 @@ import NewProduct from './products/NewProduct';
 import ProductDetail from './products/ProductDetail';
 import ProductList from "./products/ProductList";
 import Users from "./Users";
+import Login from './users/Login';
 
 function AppRoutes() {
     return (<Routes>
@@ -18,6 +19,7 @@ function AppRoutes() {
         <Route path="/products" element={<ProductList />} />
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/products/new" element={<NewProduct />} />
+        <Route path="/login" element={<Login />} />
         {/* <Route path="*" element={<Home />} /> */}
         <Route path="*" element={<NotFound />} />
     </Routes>);

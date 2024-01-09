@@ -19,7 +19,11 @@ function Header() {
                 <li className="ml-2 hover:text-orange-800"> <Link to="/products"> Products</Link></li>
                 <li className="ml-2 hover:text-orange-800"> <Link to="/users"> Users</Link></li>
                 <li className="ml-2 hover:text-orange-800"> <Link to="/contact"> Contact</Link></li>
+
+                <Link className="bg-green-500 p-1 mx-4 rounded hover:bg-green-400" to="/login">Login</Link>
+                <Link className="bg-green-500 p-1 rounded hover:bg-green-400" to="/login">Logout</Link>
             </ul>
+
         </header>);
 }
 

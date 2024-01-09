@@ -64,7 +64,7 @@ function ProductList() {
         (async function () {
             try {
                 const url = `/api/products/page/${page}/size/${size}?search=${search}&sort=${sort}&direction=${dir}`;
-                const res = await axios.get(url);
+                const res = await axios().get(url);
                 setProductRes(res.data);
             } catch (err) {
                 setError(true);

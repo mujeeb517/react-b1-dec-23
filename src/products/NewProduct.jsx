@@ -1,4 +1,4 @@
-import { isValidElement, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import ShouldRender from '../util/ShouldRender';
@@ -39,7 +39,7 @@ function NewProduct() {
         if (!isValid()) return;
         try {
             const payload = { ...product, inStock: product.inStock === 'on' };
-            await axios.post('/api/products', payload);
+            await axios().post('/api/products', payload);
             setSuccess(true);
             setProduct({ brand: '', model: '', price: '', discount: '', inStock: false });
             // redirect
