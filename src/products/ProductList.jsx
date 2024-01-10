@@ -6,7 +6,7 @@ import Error from '../util/Error';
 import ProductItem from './ProductItem';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // life cycle
 // constructor: x1
@@ -57,6 +57,7 @@ function ProductList() {
     const [searchText, setSearchText] = useState('');
     const [sort, setSort] = useState('');
     const [dir, setDir] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchData();
@@ -69,7 +70,10 @@ function ProductList() {
             const res = await axios().get(url);
             setProductRes(res.data);
         } catch (err) {
-            setError(true);
+            if (err.response.status === 401) {
+                navigate('/login');
+            } else
+                setError(true);
         } finally {
             setLoading(false);
         }
