@@ -36,9 +36,9 @@ function TableView({ products }) {
     </table>;
 }
 
-function ColumnView({ products }) {
+function ColumnView({ products, onRemove }) {
     return <div className="grid md:grid-cols-2 lg:grid-cols-4 sm:grid-cols-1">
-        {products.map(item => <ProductItem key={item._id} item={item} />)}
+        {products.map(item => <ProductItem key={item._id} item={item} onRemove={onRemove} />)}
     </div>;
 }
 
@@ -59,20 +59,23 @@ function ProductList() {
     const [dir, setDir] = useState('');
 
     useEffect(() => {
-        setLoading(true);
-        // IIFE
-        (async function () {
-            try {
-                const url = `/api/products/page/${page}/size/${size}?search=${search}&sort=${sort}&direction=${dir}`;
-                const res = await axios().get(url);
-                setProductRes(res.data);
-            } catch (err) {
-                setError(true);
-            } finally {
-                setLoading(false);
-            }
-        }());
+        fetchData();
     }, [page, searchText, sort, dir]);
+
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            const url = `/api/products/page/${page}/size/${size}?search=${search}&sort=${sort}&direction=${dir}`;
+            const res = await axios().get(url);
+            setProductRes(res.data);
+        } catch (err) {
+            setError(true);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const onRemove = () => fetchData();
 
     const next = () => {
         if (page < productsRes.metadata.pages) {
@@ -156,7 +159,7 @@ function ProductList() {
         </div>
 
         <ShouldRender cond={columns}>
-            <ColumnView products={productsRes.data} />
+            <ColumnView onRemove={onRemove} products={productsRes.data} />
         </ShouldRender>
         <ShouldRender cond={!columns}>
             <TableView products={productsRes.data} />

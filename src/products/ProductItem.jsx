@@ -1,7 +1,10 @@
 import ShouldRender from "../util/ShouldRender";
 import moment from 'moment';
 import NoImg from '../assets/img/no-img.png';
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import axios from "../util/axios";
+import { useState } from "react";
+import Error from "../util/Error";
 
 function Price({ item }) {
     function getPrice() {
@@ -29,7 +32,7 @@ function Actions() {
 // mobile-first
 // desktop
 // responsive
-function ProductItem({ item }) {
+function ProductItem({ item, onRemove }) {
 
     const onImgError = (e) => {
         e.target.src = NoImg;
@@ -37,8 +40,34 @@ function ProductItem({ item }) {
         e.target.height = 100;
     };
 
+    const [hasErr, setErr] = useState(false);
+    const [authErr, setAuthErr] = useState(false);
+
+    const onDelete = async () => {
+        try {
+            const res = confirm('are you sure you want to delete?');
+            if (res) {
+                await axios().delete(`/api/products/${item._id}`);
+                onRemove();
+            }
+        } catch (err) {
+            if (err.response.status === 403) setAuthErr(true);
+            else setErr(true);
+        }
+    }
+
     return (<div className="m-4 bg-gray-100 flex flex-col items-center justify-between rounded shadow">
+        <ShouldRender cond={hasErr || authErr}>
+            <Error msg={authErr ? 'Permission denied' : 'Try again'} />
+        </ShouldRender>
+
+        <button onClick={onDelete} className="hover:text-orange-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+        </button>
         <img onError={onImgError} src={item.image} width={200} height={200} />
+
         <div>
             <Link to={'/products/' + item._id}>
                 <h1 className="font-bold text-blue-300">{item.brand} {item.model}</h1>
