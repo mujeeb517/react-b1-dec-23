@@ -13,7 +13,7 @@ function ProductDetail() {
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
-        axios.get(`/api/products/${id}`)
+        axios().get(`/api/products/${id}`)
             .then(res => setProduct(res.data))
             .catch(err => console.log(err));
     }, []);
