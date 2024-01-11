@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../context/UserContext";
 import axios from '../util/axios';
 import Error from "../util/Error";
 import ShouldRender from "../util/ShouldRender";
@@ -13,6 +15,7 @@ function Login() {
     const [hasErr, setErr] = useState(false);
     const emailRef = useRef(null);
     const navigate = useNavigate();
+    const { setLoggedIn } = useContext(UserContext);
 
     useEffect(() => {
         if (emailRef) {
@@ -30,6 +33,7 @@ function Login() {
 
             const res = await axios().post('/api/users/signin', user);
             localStorage.setItem('token', res.data.token);
+            setLoggedIn(true);
             // redirect
             navigate('/products');
         } catch (err) {

@@ -1,7 +1,22 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { useEffect } from "react";
+import { useContext } from "react";
+import { useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import UserContext from "./context/UserContext";
+import ShouldRender from "./util/ShouldRender";
 
 function Header() {
+
+    const navigate = useNavigate();
+    const user = useContext(UserContext);
+
+    const onLogout = () => {
+        localStorage.removeItem('token');
+        user.setLoggedIn(false);
+        navigate('/login');
+    };
+
     // <h1>Header</h1>
     return (
         <header className="bg-orange-500 p-2 flex justify-between">
@@ -20,8 +35,12 @@ function Header() {
                 <li className="ml-2 hover:text-orange-800"> <Link to="/users"> Users</Link></li>
                 <li className="ml-2 hover:text-orange-800"> <Link to="/contact"> Contact</Link></li>
 
-                <Link className="bg-green-500 p-1 mx-4 rounded hover:bg-green-400" to="/login">Login</Link>
-                <Link className="bg-green-500 p-1 rounded hover:bg-green-400" to="/login">Logout</Link>
+                <ShouldRender cond={!user.isLoggedIn}>
+                    <Link className="bg-green-500 p-1 mx-4 rounded hover:bg-green-400" to="/login">Login</Link>
+                </ShouldRender>
+                <ShouldRender cond={user.isLoggedIn}>
+                    <button onClick={onLogout} className="bg-green-500 mx-4 p-1 rounded hover:bg-green-400">Logout</button>
+                </ShouldRender>
             </ul>
 
         </header>);
