@@ -14,7 +14,6 @@ module.exports = {
   },
 }
 
-
 // build / package
 // deploy
 // concatenated
@@ -22,21 +21,3 @@ module.exports = {
 // uglification
 // js bundle 
 // css bundle
-var myLongVariableName       =           100;
-var a=100;
-
-
-function fn(myLongVariableName1, myLongVariableName2){
-
-}
-
-function fn(a,b){
-  
-}
-
-var x      =      100;
-
-// downloaded
-// client side
-// api
-var x=10;
