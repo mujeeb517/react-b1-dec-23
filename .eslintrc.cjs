@@ -13,3 +13,30 @@ module.exports = {
     'react-refresh/only-export-components': 'warn',
   },
 }
+
+
+// build / package
+// deploy
+// concatenated
+// minification
+// uglification
+// js bundle 
+// css bundle
+var myLongVariableName       =           100;
+var a=100;
+
+
+function fn(myLongVariableName1, myLongVariableName2){
+
+}
+
+function fn(a,b){
+  
+}
+
+var x      =      100;
+
+// downloaded
+// client side
+// api
+var x=10;
